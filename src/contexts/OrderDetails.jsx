@@ -48,6 +48,13 @@ export function OrderDetailsProvider(props) {
 		});
 	}, [optionCounts]);
 
+	function resetOrder() {
+		setOptionCounts({
+			scoops: new Map(),
+			toppings: new Map(),
+		});
+	}
+
 	const value = useMemo(() => {
 		function updateItemCount(itemName, newItemCount, optionType) {
 			const newOptionCounts = { ...optionCounts };
@@ -58,7 +65,7 @@ export function OrderDetailsProvider(props) {
 			setOptionCounts(newOptionCounts);
 		}
 
-		return [{ ...optionCounts, totals }, updateItemCount];
+		return [{ ...optionCounts, totals }, updateItemCount, resetOrder];
 	}, [optionCounts, totals]);
 
 	return <OrderDetails.Provider value={value} {...props} />;
